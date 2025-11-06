@@ -1,34 +1,20 @@
-package main 
-// a linguagem golang funciona com pacotes, como o main
+package main
 
-import "fmt"
+import (
+	"fmt"
+	"net/http"
+)
 
 func main(){
+	fmt.Println("Hello world")
 
-	// TIPOS DE VARIAVEIS EM GO ===========================================================
+	http.HandleFunc("/", HelloUser)
 
-	// var text = "Estudar go"
-	// text := "Estudar go" // forma reduzida de declarar variaveis
-	// isso é um slice 
-	var taskItems = []string {"Fazer a tarefa de casa", "Comer"}
+	http.ListenAndServe(":8080", nil)
 
-	// isso é um array, qnd eu limito o tamanho de itens
-	// var taskItems = [20]string {"Fazer a tarefa de casa", "Comer"}
-	
+}
 
-	// fmt.Println(text)
-	// fmt.Println("Hello other line")
-	// fmt.Println(taskItems)
-
-
-	// LOOPS EM GO ===========================================================
-
-	for index, task := range taskItems {
-		fmt.Println(index + 1, "-", task)
-	}
-
-	// se não queremos usaro index, podemos usar o _
-	// for _, task := range taskItems {
-	// 	fmt.Println(task)
-	// }
+func HelloUser(writer http.ResponseWriter, request *http.Request){
+	var boasVindas = "Olá usuário, está funcionando"
+	fmt.Fprintln(writer, boasVindas)
 }
