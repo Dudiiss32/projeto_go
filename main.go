@@ -5,8 +5,10 @@ import "fmt"
 
 func main(){
 
-	// var text = "Duda é linda"
-	text := "Duda é linda"
+	// TIPOS DE VARIAVEIS EM GO ===========================================================
+
+	// var text = "Estudar go"
+	// text := "Estudar go" // forma reduzida de declarar variaveis
 	// isso é um slice 
 	var taskItems = []string {"Fazer a tarefa de casa", "Comer"}
 
@@ -14,8 +16,19 @@ func main(){
 	// var taskItems = [20]string {"Fazer a tarefa de casa", "Comer"}
 	
 
+	// fmt.Println(text)
+	// fmt.Println("Hello other line")
+	// fmt.Println(taskItems)
 
-	fmt.Println(text)
-	fmt.Println("Hello other line")
-	fmt.Println(taskItems)
+
+	// LOOPS EM GO ===========================================================
+
+	for index, task := range taskItems {
+		fmt.Println(index + 1, "-", task)
+	}
+
+	// se não queremos usaro index, podemos usar o _
+	// for _, task := range taskItems {
+	// 	fmt.Println(task)
+	// }
 }
