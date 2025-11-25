@@ -1,13 +1,25 @@
 package main
+<<<<<<< HEAD
 
 // a linguagem golang funciona com pacotes, como o main
+=======
+>>>>>>> b049427184f14099a4ad6e82909b76315992fee8
 
-import "fmt"
+import (
+	"fmt"
+	"net/http"
+)
 
+<<<<<<< HEAD
 func main() {
+=======
+func main(){
+	fmt.Println("Hello world")
+>>>>>>> b049427184f14099a4ad6e82909b76315992fee8
 
-	// TIPOS DE VARIAVEIS EM GO ===========================================================
+	http.HandleFunc("/", HelloUser)
 
+<<<<<<< HEAD
 	// var text = "Estudar go"
 	// text := "Estudar go" // forma reduzida de declarar variaveis
 	// isso é um slice
@@ -89,3 +101,13 @@ func endpointSimples(route string) string {
 	// tipo um mini endpoint fake
 	return "REQUEST OK: " + route
 }
+=======
+	http.ListenAndServe(":8080", nil)
+
+}
+
+func HelloUser(writer http.ResponseWriter, request *http.Request){
+	var boasVindas = "Olá usuário, está funcionando"
+	fmt.Fprintln(writer, boasVindas)
+}
+>>>>>>> b049427184f14099a4ad6e82909b76315992fee8
