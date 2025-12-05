@@ -1,113 +1,111 @@
 package main
-<<<<<<< HEAD
 
 // a linguagem golang funciona com pacotes, como o main
-=======
->>>>>>> b049427184f14099a4ad6e82909b76315992fee8
 
 import (
 	"fmt"
 	"net/http"
 )
 
-<<<<<<< HEAD
+// criando um slice global (para a API conseguir acessar)
+var taskItems = []string{"Fazer a tarefa de casa", "Comer"}
+
 func main() {
-=======
-func main(){
-	fmt.Println("Hello world")
->>>>>>> b049427184f14099a4ad6e82909b76315992fee8
-
-	http.HandleFunc("/", HelloUser)
-
-<<<<<<< HEAD
-	// var text = "Estudar go"
-	// text := "Estudar go" // forma reduzida de declarar variaveis
-	// isso é um slice
-	var taskItems = []string{"Fazer a tarefa de casa", "Comer"}
-
-	// isso é um array, qnd eu limito o tamanho de itens
-	// var taskItems = [20]string {"Fazer a tarefa de casa", "Comer"}
-
-	// fmt.Println(text)
-	// fmt.Println("Hello other line")
-	// fmt.Println(taskItems)
-
-	// LOOPS EM GO ===========================================================
-
-	for index, task := range taskItems {
-		fmt.Println(index+1, "-", task)
-	}
-
-	// se não queremos usar o index, podemos usar o _
-	// for _, task := range taskItems {
-	// 	fmt.Println(task)
-	// }
 
 	// ======================================================================
-	// FUNÇÕES EM GO ========================================================
+	// ROTAS DA API =========================================================
+	// definindo rotas reais com http.HandleFunc
+
+	http.HandleFunc("/", HelloUser)
+	http.HandleFunc("/tasks", GetTasks)
+	http.HandleFunc("/add-task", AddTask)
+
+	// iniciando o servidor na porta 8080
+	fmt.Println("Servidor rodando na porta 8080...")
+	http.ListenAndServe(":8080", nil)
+
+	// ======================================================================
+
 	// criando uma função simples para somar dois números
 	resultado := somar(10, 20)
 	fmt.Println("Resultado da soma:", resultado)
 
 	// chamando função que não retorna nada (void)
-	mostrarMensagem("Estudando Go todo dia é brabo")
+	mostrarMensagem("Estudando Go todo dia")
 
 	// ======================================================================
 	// STRUCTS EM GO ========================================================
-	// struct é tipo um "objeto", onde defino campos e valores
 	type Usuario struct {
 		nome  string
 		idade int
 	}
 
-	// criando um usuário
 	user := Usuario{nome: "Maria", idade: 18}
 	fmt.Println("Usuário:", user.nome, "-", user.idade, "anos")
 
 	// ======================================================================
 	// MAPS EM GO ===========================================================
-	// map é tipo um objeto de chave-valor
-
 	config := map[string]string{
 		"porta":     "8080",
 		"ambiente":  "desenvolvimento",
-		"mensagem":  "rodando API fake",
+		"mensagem":  "rodando API",
 	}
 
 	fmt.Println("Configuração da aplicação:", config["mensagem"])
 
 	// ======================================================================
-	// SIMULANDO UMA "API" (BEM SIMPLES) ===================================
-	// isso aqui não é uma API real ainda, só simulando uma função q recebe dados
-	// como se fosse um endpoint
+	// SIMULANDO UMA "API" =================================
 	resposta := endpointSimples("Pegando lista de tasks...")
 	fmt.Println(resposta)
 }
 
-// criando funções fora do main ==========================================
+// ======================================================================
+// FUNÇÕES DE API =======================================================
+
+// rota principal
+func HelloUser(w http.ResponseWriter, r *http.Request) {
+	fmt.Fprintf(w, "Bem-vindo à minha API em Go!")
+}
+
+// rota para pegar tasks
+func GetTasks(w http.ResponseWriter, r *http.Request) {
+	// escrevendo tasks na resposta
+	fmt.Fprintf(w, "Lista de tasks:\n")
+
+	for i, task := range taskItems {
+		fmt.Fprintf(w, "%d - %s\n", i+1, task)
+	}
+}
+
+// rota para adicionar task via URL
+// exemplo: http://localhost:8080/add-task?item=Estudar%20Go
+func AddTask(w http.ResponseWriter, r *http.Request) {
+
+	// pegando o valor enviado na URL
+	item := r.URL.Query().Get("item")
+
+	if item == "" {
+		fmt.Fprintf(w, "Você precisa enviar o parâmetro 'item'")
+		return
+	}
+
+	// adicionando ao slice global
+	taskItems = append(taskItems, item)
+
+	fmt.Fprintf(w, "Item adicionado com sucesso: %s\n", item)
+}
+
+// ======================================================================
+// OUTRAS FUNÇÕES ===================================
 
 func somar(a int, b int) int {
-	// retorna a soma dos números
 	return a + b
 }
 
 func mostrarMensagem(msg string) {
-	// só imprime uma mensagem
 	fmt.Println("Mensagem:", msg)
 }
 
 func endpointSimples(route string) string {
-	// simulando processamento de requisição
-	// tipo um mini endpoint fake
 	return "REQUEST OK: " + route
 }
-=======
-	http.ListenAndServe(":8080", nil)
-
-}
-
-func HelloUser(writer http.ResponseWriter, request *http.Request){
-	var boasVindas = "Olá usuário, está funcionando"
-	fmt.Fprintln(writer, boasVindas)
-}
->>>>>>> b049427184f14099a4ad6e82909b76315992fee8
